@@ -1,8 +1,10 @@
-node {
-    /* Requires the Docker Pipeline plugin to be installed */
-    sudo docker.image('node:7-alpine').inside {
-        stage('Test') {
-            sh 'node --version'
+node('!windows') {
+    withEnv(['DISABLE_AUTH=true',
+             'DB_ENGINE=sqlite']) {
+        stage('Build') {
+            echo "Database engine is ${DB_ENGINE}"
+            echo "DISABLE_AUTH is ${DISABLE_AUTH}"
+            sh 'printenv'
         }
     }
 }
